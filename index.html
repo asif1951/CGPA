@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGPA Calculator Bangladesh - Calculate Your Grade Point Average</title>
+    <meta name="description" content="Calculate your CGPA for Bangladesh universities. Easy online calculator using the 4.0 grading scale system.">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        .bg-bangladesh {
+            background: linear-gradient(135deg, #006A4E 0%, #F42A41 100%);
+        }
+        .text-bangladesh-green {
+            color: #006A4E;
+        }
+        .text-bangladesh-red {
+            color: #F42A41;
+        }
+        .border-bangladesh {
+            border-color: #006A4E;
+        }
+        .btn-bangladesh {
+            background: linear-gradient(135deg, #006A4E 0%, #F42A41 100%);
+            border: none;
+            color: white;
+        }
+        .btn-bangladesh:hover {
+            background: linear-gradient(135deg, #005a42 0%, #d12439 100%);
+            color: white;
+        }
+        .course-item {
+            background: linear-gradient(135deg, rgba(0, 106, 78, 0.1) 0%, rgba(244, 42, 65, 0.1) 100%);
+            border: 1px solid rgba(0, 106, 78, 0.2);
+        }
+        .cgpa-display {
+            background: linear-gradient(135deg, #006A4E 0%, #F42A41 100%);
+            color: white;
+        }
+        body {
+            background: linear-gradient(135deg, rgba(0, 106, 78, 0.05) 0%, rgba(255, 255, 255, 1) 50%, rgba(244, 42, 65, 0.05) 100%);
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="bg-bangladesh text-white py-5">
+        <div class="container">
+            <div class="text-center">
+                <div class="d-flex align-items-center justify-content-center gap-3 mb-4">
+                    <i class="fas fa-graduation-cap fs-1"></i>
+                    <h1 class="display-4 fw-bold mb-0">CGPA Calculator</h1>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container py-5">
+        <!-- CGPA Display -->
+        <div class="row mb-5">
+            <div class="col-md-4 mb-3">
+                <div class="card cgpa-display h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">
+                            <i class="fas fa-chart-line me-2"></i>Your CGPA
+                        </h5>
+                        <div class="display-3 fw-bold" id="cgpaValue">0.00</div>
+                        <p class="mb-0 opacity-75">out of 4.0 (Bangladesh)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">
+                            <i class="fas fa-award me-2"></i>Classification
+                        </h5>
+                        <div id="classificationBadge" class="badge bg-secondary mb-3">Not Calculated</div>
+                        <p class="text-muted small mb-0">Based on Bangladesh grading system</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="fas fa-target me-2"></i>Summary
+                        </h5>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Total Courses:</span>
+                            <span class="fw-semibold" id="totalCourses">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="text-muted">Total Credits:</span>
+                            <span class="fw-semibold" id="totalCredits">0</span>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <span class="text-muted">Grade Scale:</span>
+                            <span class="fw-semibold">4.0 (BD)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Management -->
+        <div class="row">
+            <!-- Add Course Form -->
+            <div class="col-lg-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">
+                            <i class="fas fa-plus me-2"></i>Add Course
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="courseForm">
+                            <div class="mb-3">
+                                <label for="credits" class="form-label">Credits</label>
+                                <input type="number" class="form-control" id="credits" min="0.5" step="0.5" placeholder="e.g., 3" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="grade" class="form-label">Grade</label>
+                                <select class="form-select" id="grade" required>
+                                    <option value="">Select grade</option>
+                                    <option value="A+">A+ (4.0)</option>
+                                    <option value="A">A (3.75)</option>
+                                    <option value="A-">A- (3.5)</option>
+                                    <option value="B+">B+ (3.25)</option>
+                                    <option value="B">B (3.0)</option>
+                                    <option value="B-">B- (2.75)</option>
+                                    <option value="C+">C+ (2.5)</option>
+                                    <option value="C">C (2.25)</option>
+                                    <option value="D">D (2.0)</option>
+                                    <option value="F">F (0.0)</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-bangladesh w-100">Add Course</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Course List -->
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <i class="fas fa-book-open me-2"></i>
+                        <span>Your Courses (<span id="courseCount">0</span>)</span>
+                    </div>
+                    <div class="card-body" id="courseList">
+                        <div class="text-center py-5" id="emptyCourses">
+                            <i class="fas fa-book-open fa-4x text-muted mb-3"></i>
+                            <p class="text-muted">No courses added yet. Add your first course to get started!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="card mt-5">
+            <div class="card-header">
+                <h5 class="card-title mb-0">How to Use</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 text-center mb-4">
+                        <div class="rounded-circle bg-success text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                            <span class="fw-bold">1</span>
+                        </div>
+                        <h6 class="fw-semibold">Add Course Credits</h6>
+                        <p class="text-muted small">Enter the number of credits for each course you want to calculate</p>
+                    </div>
+                    <div class="col-md-6 text-center mb-4">
+                        <div class="rounded-circle bg-danger text-white d-inline-flex align-items-center justify-content-center mb-3" style="width: 50px; height: 50px;">
+                            <span class="fw-bold">2</span>
+                        </div>
+                        <h6 class="fw-semibold">Select Your Grade</h6>
+                        <p class="text-muted small">Choose the grade you received (A+, A, A-, B+, B, B-, C+, C, D, F)</p>
+                    </div>
+                </div>
+                <div class="bg-light p-3 rounded">
+                    <h6 class="fw-semibold mb-2">Bangladesh Grading Scale (4.0):</h6>
+                    <div class="row small">
+                        <div class="col-md-2 col-4">A+ = 4.0</div>
+                        <div class="col-md-2 col-4">A = 3.75</div>
+                        <div class="col-md-2 col-4">A- = 3.5</div>
+                        <div class="col-md-2 col-4">B+ = 3.25</div>
+                        <div class="col-md-2 col-4">B = 3.0</div>
+                        <div class="col-md-2 col-4">B- = 2.75</div>
+                        <div class="col-md-2 col-4">C+ = 2.5</div>
+                        <div class="col-md-2 col-4">C = 2.25</div>
+                        <div class="col-md-2 col-4">D = 2.0</div>
+                        <div class="col-md-2 col-4">F = 0.0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-bangladesh text-white py-4 mt-5">
+        <div class="container">
+            <div class="text-center">
+                <p class="mb-0">
+                    <i class="fas fa-heart me-2"></i>
+                    Developed by <strong>Asif Ahmed Khan</strong>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // grading system
+        const gradeScale = {
+            'A+': 4.0,
+            'A': 3.75,
+            'A-': 3.5,
+            'B+': 3.25,
+            'B': 3.0,
+            'B-': 2.75,
+            'C+': 2.5,
+            'C': 2.25,
+            'D': 2.0,
+            'F': 0.0
+        };
+
+        let courses = [];
+
+        // Get performance level
+        function getPerformanceLevel(cgpa) {
+            if (cgpa >= 3.75) return { level: 'First Class', className: 'bg-success' };
+            if (cgpa >= 3.25) return { level: 'Second Class Upper', className: 'bg-primary' };
+            if (cgpa >= 2.75) return { level: 'Second Class Lower', className: 'bg-warning' };
+            if (cgpa >= 2.0) return { level: 'Third Class', className: 'bg-secondary' };
+            return { level: 'Fail', className: 'bg-danger' };
+        }
+
+        // Calculate CGPA
+        function calculateCGPA() {
+            if (courses.length === 0) return 0;
+            
+            const totalCredits = courses.reduce((sum, course) => sum + course.credits, 0);
+            const totalPoints = courses.reduce((sum, course) => sum + (course.gradePoints * course.credits), 0);
+            
+            return totalCredits > 0 ? totalPoints / totalCredits : 0;
+        }
+
+        // Update display
+        function updateDisplay() {
+            const cgpa = calculateCGPA();
+            const totalCredits = courses.reduce((sum, course) => sum + course.credits, 0);
+            const performance = getPerformanceLevel(cgpa);
+
+            document.getElementById('cgpaValue').textContent = cgpa.toFixed(2);
+            document.getElementById('totalCourses').textContent = courses.length;
+            document.getElementById('totalCredits').textContent = totalCredits;
+            document.getElementById('courseCount').textContent = courses.length;
+
+            const classificationBadge = document.getElementById('classificationBadge');
+            classificationBadge.textContent = performance.level;
+            classificationBadge.className = `badge ${performance.className} mb-3`;
+
+            renderCourseList();
+        }
+
+        // Render course list
+        function renderCourseList() {
+            const courseList = document.getElementById('courseList');
+            const emptyCourses = document.getElementById('emptyCourses');
+
+            if (courses.length === 0) {
+                emptyCourses.style.display = 'block';
+                courseList.innerHTML = '';
+                courseList.appendChild(emptyCourses);
+            } else {
+                emptyCourses.style.display = 'none';
+                courseList.innerHTML = courses.map((course, index) => `
+                    <div class="course-item p-3 rounded mb-3">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="flex-grow-1">
+                                <h6 class="fw-semibold mb-1">Course ${index + 1}</h6>
+                                <div class="d-flex gap-4 small text-muted">
+                                    <span>Credits: ${course.credits}</span>
+                                    <span>Grade: ${course.grade}</span>
+                                    <span>Points: ${course.gradePoints}</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-outline-danger btn-sm" onclick="removeCourse(${index})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Add course
+        function addCourse(credits, grade) {
+            const course = {
+                id: Date.now().toString(),
+                credits: parseFloat(credits),
+                grade: grade,
+                gradePoints: gradeScale[grade]
+            };
+
+            courses.push(course);
+            updateDisplay();
+            
+            // Show success message
+            showToast(`Course with ${credits} credits has been added successfully!`, 'success');
+        }
+
+        // Remove course
+        function removeCourse(index) {
+            const course = courses[index];
+            courses.splice(index, 1);
+            updateDisplay();
+            
+            // Show success message
+            showToast(`Course with ${course.credits} credits has been removed`, 'info');
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
+            toast.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
+            toast.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.remove();
+                }
+            }, 3000);
+        }
+
+        // Form submission
+        document.getElementById('courseForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const credits = document.getElementById('credits').value;
+            const grade = document.getElementById('grade').value;
+            
+            if (!credits || credits <= 0) {
+                showToast('Credits must be greater than 0', 'danger');
+                return;
+            }
+            
+            if (!grade) {
+                showToast('Please select a grade', 'danger');
+                return;
+            }
+            
+            addCourse(credits, grade);
+            
+            // Reset form
+            this.reset();
+        });
+
+        // Initialize display
+        updateDisplay();
+    </script>
+</body>
+</html>
